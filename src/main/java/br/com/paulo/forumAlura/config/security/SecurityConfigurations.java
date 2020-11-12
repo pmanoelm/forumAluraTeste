@@ -44,16 +44,17 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/auth").permitAll().anyRequest().authenticated().and()
+		http.authorizeRequests().antMatchers(HttpMethod.POST, "/").permitAll().anyRequest().authenticated().and()
 				.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(new AutenticacaoViaTokenFilter(tokenService),
 						UsernamePasswordAuthenticationFilter.class);
+
 	}
 
 	// Configurações de recursos estaticos : css, javascript,imagens entre outros
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-
+		
 	}
 
 }

@@ -32,8 +32,13 @@ public class TokenserviceImpl implements TokenService {
 		Date hoje = new Date();
 		Date dataExpiration = new Date(hoje.getTime() + Long.parseLong(expiration));
 
-		return Jwts.builder().setIssuer("API do Forum Alura").setSubject(logado.getId().toString()).setIssuedAt(hoje)
-				.setExpiration(dataExpiration).signWith(SignatureAlgorithm.HS256, secretKey).compact();
+		return Jwts.builder()
+				.setIssuer("API do Forum Alura")
+				.setSubject(logado.getId().toString())
+				.setIssuedAt(hoje)
+				.setExpiration(dataExpiration)
+				.signWith(SignatureAlgorithm.HS256, secretKey)
+				.compact();
 	}
 
 	@Override
