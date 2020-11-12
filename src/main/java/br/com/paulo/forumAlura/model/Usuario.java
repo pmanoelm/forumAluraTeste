@@ -1,18 +1,60 @@
 package br.com.paulo.forumAlura.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private String email;
 	private String senha;
+	
+	public Usuario(String nome, String email, String senha) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Perfil> perfis = new ArrayList<>();
+
+	public Usuario(Long id, String nome, String email, String senha, List<Perfil> perfis) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.perfis = perfis;
+	}
+	
+	
+
+	public Usuario() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -69,6 +111,41 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.perfis;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 }
