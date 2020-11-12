@@ -38,7 +38,7 @@ public class AutenticacaoController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
-
+//aaa
 	}
 
 }
