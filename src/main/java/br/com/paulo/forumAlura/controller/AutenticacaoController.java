@@ -19,6 +19,7 @@ import br.com.paulo.forumAlura.service.form.LoginForm;
 @RestController
 @RequestMapping("/auth")
 public class AutenticacaoController {
+	//Teste de commit
 
 	@Autowired
 	private AuthenticationManager authManager;
